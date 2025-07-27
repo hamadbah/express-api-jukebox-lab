@@ -1,12 +1,12 @@
-const Music = require('../models/music.js');
+const Track = require('../models/track.js');
 const express = require('express');
 const router = express.Router();
 
-// CREATE - POST - /musics
+// CREATE - POST - 
 router.post('/', async (req, res) => {
   try {
-    const createMusic = await Music.create(req.body);
-    return res.json(createMusic);
+    const createTrack = await Track.create(req.body);
+    return res.json(createTrack);
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
@@ -15,22 +15,22 @@ router.post('/', async (req, res) => {
 // INDEX - GET - /
 router.get('/', async (req, res) => {
   try {
-    const foundMusics = await Music.find();
-    res.status(200).json(foundMusics);
+    const foundTrack = await Track.find();
+    res.status(200).json(foundTrack);
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
 });
 
-// READ - GET - /musics/:musicId
-router.get('/:musicId', async (req, res) => {
+// READ - GET - 
+router.get('/:trackId', async (req, res) => {
   try {
-    const foundMusic = await Music.findById(req.params.musicId);
-    if (!foundMusic) {
+    const foundTrack = await Track.findById(req.params.trackId);
+    if (!foundTrack) {
       res.status(404);
-      throw new Error('Music not found.');
+      throw new Error('Track not found.');
     }
-    res.status(200).json(foundMusic);
+    res.status(200).json(foundTrack);
   } catch (err) {
     if (res.statusCode === 404) {
       res.json({ err: err.message });
@@ -40,27 +40,27 @@ router.get('/:musicId', async (req, res) => {
   }
 });
 
-// DELETE - DELETE - /musics/:musicId
-router.delete('/:musicId', async (req, res) => {
+// DELETE - DELETE - 
+router.delete('/:trackId', async (req, res) => {
   try {
-    const delMusic = await Music.findByIdAndDelete(req.params.musicId);
-    res.status(200).json(delMusic);
+    const delTrack = await Track.findByIdAndDelete(req.params.trackId);
+    res.status(200).json(delTrack);
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
 });
 
-// UPDATE - PUT - /musics/:musicId
-router.put('/:musicId', async (req, res) => {
+// UPDATE - PUT -
+router.put('/:trackId', async (req, res) => {
   try {
-    const updateMusic = await Music.findByIdAndUpdate(req.params.musicId, req.body, {
+    const updateTrack = await Track.findByIdAndUpdate(req.params.trackId, req.body, {
       new: true,
     });
-    if (!updateMusic) {
+    if (!updateTrack) {
       res.status(404);
       throw new Error('Pet not found.');
     }
-    res.status(200).json(updateMusic);
+    res.status(200).json(updateTrack);
   } catch (err) {
     if (res.statusCode === 404) {
       res.json({ err: err.message });
